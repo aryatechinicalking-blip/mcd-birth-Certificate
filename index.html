@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Delhi Birth Certificate</title>
+
+<style>
+body {
+  font-family: "Times New Roman";
+  background:#ddd;
+}
+
+#certificate {
+  width:210mm;
+  height:297mm;
+  margin:auto;
+  background:white;
+  border:12px solid #1a3c8b;
+  padding:30px;
+  position:relative;
+}
+
+/* Watermark */
+#certificate::before {
+  content:"MCD";
+  position:absolute;
+  top:40%;
+  left:25%;
+  font-size:100px;
+  color:rgba(0,0,0,0.05);
+  transform:rotate(-30deg);
+}
+
+.header {
+  text-align:center;
+}
+
+.header h3 {
+  margin:2px;
+  font-size:16px;
+}
+
+.header h2 {
+  margin:2px;
+  font-size:20px;
+}
+
+.sub {
+  text-align:center;
+  font-size:13px;
+}
+
+.field {
+  margin:6px 0;
+  display:flex;
+}
+
+.label {
+  width:45%;
+}
+
+.value {
+  width:55%;
+  font-weight:bold;
+}
+
+.qr {
+  text-align:center;
+  margin-top:20px;
+}
+
+.footer {
+  text-align:center;
+  font-size:12px;
+  margin-top:15px;
+}
+
+@media print {
+  body * {visibility:hidden;}
+  #certificate, #certificate * {visibility:visible;}
+  #certificate {position:absolute; top:0; left:0;}
+}
+</style>
+</head>
+
+<body>
+
+<h3>Delhi Certificate Generator</h3>
+
+<input id="name" placeholder="नाम / Name"><br>
+<input id="gender" placeholder="लिंग / Gender"><br>
+<input id="dob" type="date"><br>
+<input id="place" placeholder="जन्म स्थान / Place"><br>
+<input id="father" placeholder="पिता का नाम"><br>
+<input id="mother" placeholder="माता का नाम"><br>
+<input id="reg" placeholder="Registration No"><br>
+
+<button onclick="gen()">Generate</button>
+
+<div id="certificate" style="display:none;">
+
+<div class="header">
+<h3>राष्ट्रीय राजधानी क्षेत्र, दिल्ली सरकार</h3>
+<h3>Govt. of NCT of Delhi</h3>
+<h2>नगर निगम / Municipal Corporation</h2>
+<h3>जन्म प्रमाण पत्र / Birth Certificate</h3>
+</div>
+
+<hr>
+
+<div class="sub">
+(जन्म और मृत्यु पंजीकरण अधिनियम 1969 के अंतर्गत जारी)
+</div>
+
+<br>
+
+<div class="field"><div class="label">नाम / Name</div><div class="value" id="c1"></div></div>
+<div class="field"><div class="label">लिंग / Gender</div><div class="value" id="c2"></div></div>
+<div class="field"><div class="label">जन्म तिथि / DOB</div><div class="value" id="c3"></div></div>
+<div class="field"><div class="label">जन्म स्थान / Place</div><div class="value" id="c4"></div></div>
+<div class="field"><div class="label">पिता का नाम</div><div class="value" id="c5"></div></div>
+<div class="field"><div class="label">माता का नाम</div><div class="value" id="c6"></div></div>
+<div class="field"><div class="label">पंजीकरण संख्या</div><div class="value" id="c7"></div></div>
+
+<div class="qr">
+<img id="qr">
+</div>
+
+<div class="footer">
+यह एक सिस्टम जनरेटेड प्रमाण पत्र है | This is system generated certificate
+</div>
+
+</div>
+
+<br>
+<button onclick="window.print()">Print A4</button>
+
+<script>
+function gen(){
+c1.innerText=name.value;
+c2.innerText=gender.value;
+c3.innerText=dob.value;
+c4.innerText=place.value;
+c5.innerText=father.value;
+c6.innerText=mother.value;
+c7.innerText=reg.value;
+
+qr.src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="+name.value+" "+dob.value;
+
+certificate.style.display="block";
+}
+</script>
+
+</body>
+</html>
